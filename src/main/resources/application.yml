@@ -1,13 +1,22 @@
 spring:
   datasource:
+    username: postgres
+    password: aparna
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://localhost:5432/student-info
     platform: postgres
     initialization-mode: never
     continue-on-error: true
+    mvc:
+      ignore-default-model-on-redirect: false
+      throw-exception-if-no-handler-found: true
+      throw-no-handler-found: true
   jpa:
     show-sql: true
     generate-ddl: true
     hibernate:
       ddl-auto: none
     database: postgresql
+
+
+
