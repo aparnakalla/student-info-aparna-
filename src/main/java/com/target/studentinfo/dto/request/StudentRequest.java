@@ -1,8 +1,8 @@
 package com.target.studentinfo.dto.request;
 
 import com.target.studentinfo.model.AllValidationErrorsGroup;
+import com.target.studentinfo.model.Gender;
 import jakarta.validation.constraints.*;
-import jakarta.validation.groups.Default;
 import lombok.Getter;
 import lombok.Setter;
 //import org.antlr.v4.runtime.misc.NotNull;
@@ -32,8 +32,12 @@ public class StudentRequest implements Serializable {
     @Min(value = 2, message = "Age must be at least 2",groups = AllValidationErrorsGroup.class)
     @Max(value = 100, message = "Age must be at most 100",groups = AllValidationErrorsGroup.class)
     private int age;
-    @NotNull(message = "Gender cannot be null",groups = AllValidationErrorsGroup.class)
-    @Pattern(regexp = "^(male|female|prefer not to say)$", flags = Pattern.Flag.CASE_INSENSITIVE, message = "Invalid gender",groups = AllValidationErrorsGroup.class)
+//    @NotNull(message = "Gender cannot be null",groups = AllValidationErrorsGroup.class)
+//    @Pattern(regexp = "^(male|female|prefer not to say)$", flags = Pattern.Flag.CASE_INSENSITIVE, message = "Invalid gender",groups = AllValidationErrorsGroup.class)
+//    private String gender;
+
+    @NotNull(message = "Gender cannot be null", groups = {AllValidationErrorsGroup.class})
+    @GenderEnum(groups = {AllValidationErrorsGroup.class}) // Use EnumType.STRING to store the enum values as strings in the database
     private String gender;
     @NotNull(message = "address cannot be null",groups = AllValidationErrorsGroup.class)
     private String address;
@@ -46,5 +50,6 @@ public class StudentRequest implements Serializable {
     @NotNull(message = "transport cannot be null",groups = AllValidationErrorsGroup.class)
     private String transport;
     private boolean isActive = Boolean.TRUE;
+
 
 }

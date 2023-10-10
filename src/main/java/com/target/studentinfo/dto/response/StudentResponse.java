@@ -2,8 +2,6 @@ package com.target.studentinfo.dto.response;
 
 import lombok.*;
 
-import java.io.Serializable;
-
 @Getter
 @Setter
 @Builder

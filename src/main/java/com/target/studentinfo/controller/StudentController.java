@@ -1,11 +1,11 @@
 package com.target.studentinfo.controller;
 import com.target.studentinfo.dto.mapper.StudentMapper;
+import com.target.studentinfo.model.Gender;
 import com.target.studentinfo.dto.request.StudentRequest;
 import com.target.studentinfo.dto.response.StudentResponse;
 import com.target.studentinfo.model.AllValidationErrorsGroup;
 import com.target.studentinfo.model.Student;
 import com.target.studentinfo.service.StudentService;
-import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -56,12 +56,29 @@ public class StudentController {
 
             return ResponseEntity.badRequest().body(errorMessages);
         }
+        if (!isValidGender(studentRequest.getGender())) {
+            return ResponseEntity.badRequest().body("Invalid gender value. Allowed values are: MALE, FEMALE, OTHERS");
+        }
+
+
 
         // If there are no validation errors, proceed to add the student
         Student student = studentMapper.toStudent(studentRequest);
         Student addedStudent = studentService.addStudent(student);
         return ResponseEntity.ok(studentMapper.toStudentResponse(addedStudent));
     }
+    private boolean isValidGender(String gender) {
+        try {
+            Gender.valueOf(gender.toUpperCase());
+            return true;
+        } catch (IllegalArgumentException e) {
+            return false;
+        }
+    }
+
+
+
+
 //    public ResponseEntity<?> addStudent(@Valid @RequestBody StudentRequest studentRequest, BindingResult bindingResult) {
 //        if (bindingResult.hasErrors()) {
 //
